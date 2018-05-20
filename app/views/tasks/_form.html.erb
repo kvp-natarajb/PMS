@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="content">
+        <%= simple_form_for([project, task]) do |f| %>
+          <% if task.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+              <ul>
+              <% task.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+
+          <div class="row">
+            <div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8">
+              <div class="form-group">
+                <%= f.input :name, label: false, input_html: { class: "form-control", required: true }, placeholder: "Task name" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8">
+              <div class="form-group">
+                <%= f.input :description, label: false, as: :text, input_html: { class: "form-control", required: true, row: 8 }, placeholder: "Task description" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+              <div class="col-lg-offset-3 col-md-6">
+                <div class="form-group">
+                  <%= f.input :start_date,as: :string,label:false,  input_html: { class: "form-control" , required: true }, placeholder: "Task start date"  %>
+                </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-offset-3 col-md-6">
+                <div class="form-group">
+                  <%= f.input :due_date, as: :string,label:false,  input_html: { class: "form-control" , required: true }, placeholder: "Task end date"  %>
+                </div>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-offset-3 col-md-6">
+                <div class="form-group">
+                  <%= f.collection_check_boxes(:assigned_user_ids, @project_users, :id, :email, html: {class: "form-control"}, include_hidden: false) %>
+                </div> 
+            </div>
+          </div>
+
+          <div class="row">
+              <div class="col-lg-offset-3 col-md-6">
+                <div class="form-group">
+                  <%= f.select :status, Task.statuses.keys, {}, {class: 'form-control'} %>
+                </div> 
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8">
+              <%= f.button :submit, class: 'btn btn-primary' %>
+              <%= link_to "Cancel", project_path(@project), class: "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+</div>
+

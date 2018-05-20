@@ -1,0 +1,15 @@
+/* line 1, /home/kvp/workspace/project_management/app/assets/stylesheets/projects.scss */
+.card {
+  min-height: 125px !important;
+}
+
+/* line 5, /home/kvp/workspace/project_management/app/assets/stylesheets/projects.scss */
+.card-user .content {
+  min-height: 56px !important;
+}
+
+/* line 9, /home/kvp/workspace/project_management/app/assets/stylesheets/projects.scss */
+.empty_hyperlink {
+  color: black;
+  text-decoration: none;
+}

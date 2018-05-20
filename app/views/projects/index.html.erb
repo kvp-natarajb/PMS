@@ -1,0 +1,40 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <% if can? :create, @project %>
+        <div class="col-md-3 col-lg-3">
+            <div class="card">
+              <div class="content">
+                <div class="text-center p35">
+                  <%= link_to new_project_path do %>
+                    <i class="material-icons fs36">add</i>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+        </div>
+      <% end %>
+      <% @projects.each do |project| %>
+        <%= link_to project_path(project), class: 'empty_hyperlink' do %>
+          <div class="col-md-3 col-lg-3">
+            <div class="card card-user survey-list">
+              <div class="header">
+                <h4 class="title"><%= project.try(:name) %></h4>
+              </div>
+              <div class="content">
+                <%= truncate(project.try(:description), :length => 20) %>
+              </div>
+              <div class="text-center">
+                <%= project.try(:created_at).strftime('%d-%b-%Y') %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      <div class="clearfix"></div>
+      <div class="text-center">
+        <%= will_paginate @projects %>
+      </div>
+    </div>
+  </div>
+</div>

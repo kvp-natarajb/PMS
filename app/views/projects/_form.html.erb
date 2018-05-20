@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="content">
+            <%= simple_form_for(project) do |f| %>
+              <% if project.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+                  <ul>
+                  <% project.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="row">
+                <div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8">
+                  <div class="form-group">
+                    <%= f.input :name, label: false, input_html: { class: "form-control", required: true }, placeholder: "Project name" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8">
+                  <div class="form-group">
+                    <%= f.input :description, label: false, as: :text, input_html: { class: "form-control", required: true, row: 8 }, placeholder: "Project description" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-offset-3 col-md-6">
+                  <div class="form-group">
+                    <%= f.input :collaborator_emails, label:false,  input_html: { class: "form-control" , required: true }, placeholder: "Collaborator emails with comma seperated" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-lg-offset-3 col-md-6">
+                    <div class="form-group">
+                      <%= f.input :start_date,as: :string,label:false,  input_html: { class: "form-control" , required: true }, placeholder: "Project start date"  %>
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-offset-3 col-md-6">
+                    <div class="form-group">
+                      <%#= f.label :valid_till %>
+                      <%= f.input :due_date, as: :string,label:false,  input_html: { class: "form-control" , required: true }, placeholder: "Project end date"  %>
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-offset-3 col-md-6">
+                    <div class="form-group">
+                      <%= f.select :status, Project.statuses.keys, {}, {class: 'form-control'} %>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8">
+                  <%= f.button :submit, class: 'btn btn-primary' %>
+                </div>
+              </div>
+            <% end %>
+      </div>
+    </div>
+</div>

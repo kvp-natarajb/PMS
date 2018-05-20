@@ -1,0 +1,29 @@
+<div class="sidebar" data-color="red" data-image="<%= image_url('sidebar-5.jpg')%>">
+   <div class="sidebar-wrapper">
+       <div class="logo">
+           <a href="http://www.creative-tim.com" class="simple-text">
+                   Creative Tim
+               </a>
+       </div>
+
+       <ul class="nav">
+          <% if current_page?(controller: 'projects', action: 'index') %>
+            <% if can? :create, @project %>
+              <li>
+                  <%= link_to new_project_path  do %>
+                      <i class="material-icons">add</i>
+                      <p>New Project</p>
+                  <% end %>
+              </li>
+            <% end %>
+          <% else %>
+            <li>
+                <%= link_to projects_path do %>
+                  <i class="material-icons">note_add</i>
+                  <p id="side_title">Projects</p>
+                <% end %>
+            </li>
+          <% end %>
+        </ul>
+   </div>
+</div>

@@ -1,0 +1,76 @@
+<p id="notice"><%= notice %></p>
+<div class="card">
+   <div class="header">
+      <div class="row">
+        <div class="col-md-6">
+            <h4 class="title"> <%= @project.try(:name) %></h4>
+        </div>
+        <div class="col-md-6 text-success text-right"><%= @project.status %></div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 text-success"><p class="category"><%= @project.description %></p></div>
+        <div class="col-md-4 text-success text-right">
+            <% if can? :update, @project %>
+                <%= link_to "Edit Project", edit_project_path(@project), class: "btn btn-primary" %>
+            <% end %>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="card ">
+    <div class="header">
+      <div class="row">
+        <div class="col-md-8"><h4 class="title">Tasks</h4></div>
+        <% if can? :create, @project %>
+            <div class="col-md-4 text-right"><%= link_to "New Task", new_project_task_path(@project), class:"btn btn-primary" %></div>
+        <% end %>
+      </div>
+    </div>
+    <div class="content">
+        <div class="table-full-width">
+            <table class="table">
+                <thead>
+                    <td></td>
+                    <td>Task name</td>
+                    <td>Assigned users</td>
+                    <td>Status</td>
+                    <td></td>
+                </thead>
+                <tbody>
+                    <% @tasks && @tasks.each_with_index do |task, index| %>
+                        <tr>
+                            <td>
+                              <div class="checkbox">
+                                <input id="checkbox<%=index%>" type="checkbox" checked>
+                                <label for="checkbox<%=index%>"></label>
+                              </div>
+                            </td>
+                            <td><%= task.try(:name) %></td>
+                            <td><%= task.assigned_users.map(&:email).join(',') %></td>
+                            <td><%= task.try(:status) %></td>
+                            <td class="td-actions text-right">
+                                <% if task.assigned_users.map(&:email).include?(current_user.email) || @project.owner == current_user %>
+                                    <%= link_to edit_project_task_path(@project, task), class:"btn btn-info btn-simple btn-xs" do %>
+                                        <i class="fa fa-edit"></i>
+                                    <% end %>
+                                    <% if can? :create, task %>
+                                        <%= link_to project_task_path(@project, task), method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-info btn-simple btn-xs" do %>
+                                            <i class="fa fa-times"></i>
+                                        <% end %>
+                                    <% end %>
+                                <% end %>
+                            </td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <hr>
+            <div class="stats">
+                <i class="fa fa-history"></i> Updated <%= time_ago_in_words(@tasks.last.try(:created_at)) if @tasks.last.present? %>
+            </div>
+        </div>
+    </div>
+</div>

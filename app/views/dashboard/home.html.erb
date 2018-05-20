@@ -1,0 +1,5 @@
+<% if current_user.role?("admin") %>
+  <%= render 'admin', projects: @projects %>
+<% else %>
+  <%= render 'developer', projects: @projects %>
+<% end %>
